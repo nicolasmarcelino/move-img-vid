@@ -1,30 +1,14 @@
-import shutil
 import os
-import string
-import random
 
-'''
-Warning: the script assumes the directories already exist
-'''
+strings = []
 
-def id_generator(size=12, chars=string.ascii_uppercase + string.digits):
-    return ''.join(random.choice(chars) for _ in range(size))
+files = os.listdir()
 
-image_file_formats = (".jpg", ".gif", ".jpeg", ".png", ".webp")
-video_file_formats = (".mp4", ".avi", ".mkv", ".flv", ".webm")
+print(type(len(files)))
 
-files = [f for f in os.listdir() if os.path.isfile(f) and (f.endswith(image_file_formats) or f.endswith(video_file_formats))]
-progress = len(files)
-# check the number of tracked files
-# print(progress)
+files.remove("script.py")
 
-for file in files:
-    file_name, file_extension = os.path.splitext(file)
-    if file.endswith(image_file_formats):
-        shutil.move(file, ''.join(('pics/', id_generator(), file_extension)))
-    elif file.endswith(video_file_formats):
-        shutil.move(file, ''.join(('vids/', id_generator(), file_extension)))
-    else:
-        print("something wrong with ", file)
-    progress = progress - 1
-    print(progress," files to go")
+for index in range(len(files)):
+    filename, file_extension = files[index].rsplit('.', 1)
+    new_filename = ".".join([strings[index], file_extension])
+    os.rename(files[index], new_filename)
